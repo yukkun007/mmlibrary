@@ -1,0 +1,32 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+python-dotenv = "==0.10.5"
+python-dateutil = "==2.8.1"
+selenium = "==3.141.0"
+beautifulsoup4 = "==4.8.2"
+jinja2 = "==2.11.1"
+
+[dev-packages]
+"flake8" = "==3.6.0"
+mypy = "==0.641"
+pytest = "==3.9.3"
+black = "==18.9b0"
+pytest-cov = "==2.6.0"
+coverage = "==5.0.3"
+sphinx = "*"
+
+[requires]
+python_version = "3.6"
+
+[scripts]
+v = "python --version"
+start = "mmlibrary"
+ut = "py.test -v --capture=no --cov-config .coveragerc --cov=mmlibrary --cov-report=xml --cov-report term-missing ."
+utsp = "py.test -v --capture=no --cov-config .coveragerc --cov=mmlibrary --cov-report=xml --cov-report term-missing -k core_test ."
+ut_fast = "py.test -v --capture=no --cov-config .coveragerc --cov=mmlibrary --cov-report=xml --cov-report term-missing --duration=20 -m 'not slow' ."
+lint = "flake8 --max-line-length=100 --ignore=E203,W503 mmlibrary"
+doc = "./doc.sh"
