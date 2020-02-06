@@ -29,7 +29,7 @@ pip install --upgrade git+https://github.com/yukkun007/mmlibrary
 ```(sh)
 python
 >>> import mmlibrary
->>> books = mmlibrary.search(title="test")
+>>> books = mmlibrary.search_rental(title="test")
 >>> print(books)
 ```
 

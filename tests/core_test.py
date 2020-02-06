@@ -29,13 +29,15 @@ class TestCore:
         search_reserve(params)
 
     @pytest.mark.slow
-    def test_search_expire(self):
-        params = {"all_user": False, "users": ["yutaka"], "debug": False}
+    @pytest.mark.parametrize("zero_behavior", [("message"), ("none")])
+    def test_search_expire(self, zero_behavior):
+        params = {"all_user": False, "users": ["yutaka"], "debug": False, "zero": zero_behavior}
         search_expire(params)
 
     @pytest.mark.slow
-    def test_search_prepare(self):
-        params = {"all_user": False, "users": ["yutaka"], "debug": False}
+    @pytest.mark.parametrize("zero_behavior", [("message"), ("none")])
+    def test_search_prepare(self, zero_behavior):
+        params = {"all_user": False, "users": ["yutaka"], "debug": False, "zero": zero_behavior}
         search_prepare(params)
 
     def test_fix_users_all(self):

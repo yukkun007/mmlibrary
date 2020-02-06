@@ -68,9 +68,7 @@ def search_expire(params: Dict) -> List[str]:
         # 0件の場合のメッセージ処理
         if len(expire_books.list) <= 0:
             zero_behavior = params.get("zero", "always")
-            if zero_behavior == "always":
-                pass
-            elif zero_behavior == "message":
+            if zero_behavior == "message":
                 # メッセージ作り直し
                 messages = []
                 messages.append("{}({})の本で、期限切れが近い本はありません。".format(user.disp_name, user.id))
@@ -115,9 +113,7 @@ def search_prepare(params: Dict) -> List[str]:
         # 0件の場合のメッセージ処理
         if len(prepared_reserved_books.list) <= 0:
             zero_behavior = params.get("zero", "always")
-            if zero_behavior == "always":
-                pass
-            elif zero_behavior == "message":
+            if zero_behavior == "message":
                 # メッセージ作り直し
                 messages = []
                 messages.append("{}({})の予約本で、届いている本はありません。".format(user.disp_name, user.id))
