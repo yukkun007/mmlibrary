@@ -1,6 +1,9 @@
+import os
 import argparse
 import logging
 from typing import List
+from dotenv import load_dotenv
+from mmlibrary.user import User
 from .core import search_all, search_rental, search_expire, search_reserve, search_prepare
 
 
@@ -24,6 +27,9 @@ def main():
 
     # userlistの処理
     # returnする
+    if args.userlist:
+        _show_user_list()
+        return
 
     # log設定
     formatter = "%(asctime)s : %(levelname)s : %(message)s"
@@ -64,6 +70,18 @@ def _print_messages(messages: List[str]):
     for message in messages:
         print(message)
         print("=====================================")
+
+
+def _show_user_list():
+    load_dotenv(verbose=True)
+    users = []
+    users.append(User(os.environ["USER1"]))
+    users.append(User(os.environ["USER2"]))
+    users.append(User(os.environ["USER3"]))
+    users.append(User(os.environ["USER4"]))
+    print("user list is.....")
+    for user in users:
+        print("\tname: {} [{}({})]".format(user.name, user.disp_name, user.id))
 
 
 if __name__ == "__main__":
