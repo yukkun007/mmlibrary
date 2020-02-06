@@ -18,6 +18,13 @@ def main():
     parser.add_argument(
         "-m", "--mode", help="検索モード", choices=["all", "rental", "expire", "reserve", "prepare"]
     )
+    parser.add_argument(
+        "-z",
+        "--zero",
+        help="結果0件の場合の表示モード",
+        default="always",
+        choices=["always", "message", "none"],
+    )
 
     parser.add_argument("-A", "--all", help="全ユーザを対象に検索します", action="store_true")
     parser.add_argument("-D", "--debug", help="デバッグ出力をONにします", action="store_true")
@@ -39,7 +46,7 @@ def main():
     else:
         logging.basicConfig(format=formatter)
 
-    params = {"all_user": args.all, "users": args.users}
+    params = {"all_user": args.all, "users": args.users, "zero": args.zero}
 
     if args.mode == "all":
         # 借りてる + 予約
@@ -66,7 +73,8 @@ def main():
 
 
 def _print_messages(messages: List[str]):
-    print("=====================================")
+    if len(messages) > 0:
+        print("=====================================")
     for message in messages:
         print(message)
         print("=====================================")

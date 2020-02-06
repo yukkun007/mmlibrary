@@ -59,9 +59,22 @@ def search_expire(params: Dict) -> List[str]:
     for user in users:
         # 指定ユーザの借りている本で2日以内に期限切れの本を取得
         expire_books = library.get_expire_rental_books(user, param={"xdays": 2})
-        if expire_books is not None or len(expire_books.list) == 0:
+        # 0件でも空のリストができているので取り敢えずメッセージ生成
+        if expire_books is not None:
             info = UserBookInfo(user, rental_books=expire_books)
             messages.append(message_maker.get_rental_books_message(info))
+
+        # 0件の場合のメッセージ処理
+        if len(expire_books.list) <= 0:
+            if params["zero"] == "always":
+                pass
+            elif params["zero"] == "message":
+                # メッセージ作り直し
+                messages = []
+                messages.append("{}({})の本で、期限切れが近い本はありません。".format(user.disp_name, user.id))
+            elif params["zero"] == "none":
+                messages = []
+
     return messages
 
 
@@ -90,11 +103,24 @@ def search_prepare(params: Dict) -> List[str]:
         rental_books = library.get_all_rental_books(user)
         # 指定ユーザの予約本で「準備完了」「移送中」の本を取得
         prepared_reserved_books = library.get_prepared_reserved_books(user)
-        if prepared_reserved_books is not None or len(prepared_reserved_books.list):
+        # 0件でも空のリストができているので取り敢えずメッセージ生成
+        if prepared_reserved_books is not None:
             info = UserBookInfo(
                 user, rental_books=rental_books, reserved_books=prepared_reserved_books
             )
             messages.append(message_maker.get_rental_and_reserved_books_message(info))
+
+        # 0件の場合のメッセージ処理
+        if len(prepared_reserved_books.list) <= 0:
+            if params["zero"] == "always":
+                pass
+            elif params["zero"] == "message":
+                # メッセージ作り直し
+                messages = []
+                messages.append("{}({})の予約本で、届いている本はありません。".format(user.disp_name, user.id))
+            elif params["zero"] == "none":
+                messages = []
+
     return messages
 
 
