@@ -26,7 +26,7 @@ def main():
         choices=["always", "message", "none"],
     )
 
-    parser.add_argument("-A", "--all", help="全ユーザを対象に検索します", action="store_true")
+    parser.add_argument("-A", "--alluser", help="全ユーザを対象に検索します", action="store_true")
     parser.add_argument("-D", "--debug", help="デバッグ出力をONにします", action="store_true")
     parser.add_argument("-U", "--userlist", help="登録済みユーザのリストを表示します", action="store_true")
 
@@ -46,7 +46,7 @@ def main():
     else:
         logging.basicConfig(format=formatter)
 
-    params = {"all_user": args.all, "users": args.users, "zero": args.zero}
+    params = {"all_user": args.alluser, "users": args.users, "zero": args.zero}
 
     if args.mode == "all":
         # 借りてる + 予約
