@@ -1,4 +1,5 @@
 import os
+import logging
 from typing import Dict, List
 from dotenv import load_dotenv
 from mmlibrary.user import User
@@ -146,4 +147,6 @@ def _fix_users(params: Dict) -> List[User]:
             new_user = user_dict.get(target_user)
             if new_user is not None:
                 new_users.append(new_user)
+        if len(new_users) <= 0:
+            logging.warning("user not found.")
         return new_users
