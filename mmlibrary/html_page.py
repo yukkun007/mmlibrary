@@ -43,28 +43,29 @@ class HtmlPage:
         return element
 
     def __login(self, login_url: str, user: User) -> None:
-        logging.debug("login..... : user.name={0}, url={1}".format(user.name, login_url))
+        logging.debug("[0] login start. : user.name={}, url={}".format(user.name, login_url))
 
         self.driver.get(login_url)
-        logging.debug("----------- 1: [end] driver.get(url)")
+        logging.debug("[1] driver.get done.")
 
         self.__wait()
-        logging.debug("----------- 2: [end] wait")
+        logging.debug("[2] wait done.")
 
         # ログインボタン押下
         uid = self.__wait_element((By.NAME, "usercardno"))
         password = self.__wait_element((By.NAME, "userpasswd"))
         uid.send_keys(user.id)
         password.send_keys(user.password)
-        logging.debug("----------- 3: [end] sended_keys")
+        logging.debug("[3] send keys done.")
         button = self.__wait_element((By.NAME, "Login"))
-        logging.debug("----------- 4: [end] button wait")
+        logging.debug("[4] button element located done.")
         button.click()
-        logging.debug("----------- 5: [end] button.click()")
+        logging.debug("[5] button click done.")
 
         # ロードされたかを確認
         self.__wait_element((By.NAME, "FormLEND"))
-        logging.debug("----------- 6: [end] wait")
+        logging.debug("[6] load all wait done.")
+        logging.debug("[7] login end.")
 
     def fetch_login_page(self, login_url: str, user: User) -> str:
         self.__login(login_url, user)

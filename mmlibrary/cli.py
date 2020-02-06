@@ -26,9 +26,12 @@ def main():
     # returnする
 
     # log設定
+    formatter = "%(asctime)s : %(levelname)s : %(message)s"
     if args.debug:
         # ログレベルを DEBUG に変更
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=logging.DEBUG, format=formatter)
+    else:
+        logging.basicConfig(format=formatter)
 
     params = {"all_user": args.all, "users": args.users}
 
