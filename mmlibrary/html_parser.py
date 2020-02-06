@@ -19,7 +19,7 @@ class HtmlParser:
         books = HtmlParser._create_books(type)
         table = HtmlParser._get_books_table(html, type)
         if table is None:
-            logging.warning("table is not found.")
+            logging.debug("table is not found.")
             return books
 
         tds_list = HtmlParser._get_target_tds_list(table)
@@ -54,7 +54,7 @@ class HtmlParser:
         table = soup.select("form[name='" + id_string + "'] > div > table[border]")
 
         if len(table) <= 0:
-            logging.warning("table not found.")
+            logging.debug("table not found.")
             return None
 
         return table
