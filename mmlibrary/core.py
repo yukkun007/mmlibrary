@@ -66,13 +66,14 @@ def search_expire(params: Dict) -> List[str]:
 
         # 0件の場合のメッセージ処理
         if len(expire_books.list) <= 0:
-            if params["zero"] == "always":
+            zero_behavior = params.get("zero", "always")
+            if zero_behavior == "always":
                 pass
-            elif params["zero"] == "message":
+            elif zero_behavior == "message":
                 # メッセージ作り直し
                 messages = []
                 messages.append("{}({})の本で、期限切れが近い本はありません。".format(user.disp_name, user.id))
-            elif params["zero"] == "none":
+            elif zero_behavior == "none":
                 messages = []
 
     return messages
@@ -112,13 +113,14 @@ def search_prepare(params: Dict) -> List[str]:
 
         # 0件の場合のメッセージ処理
         if len(prepared_reserved_books.list) <= 0:
-            if params["zero"] == "always":
+            zero_behavior = params.get("zero", "always")
+            if zero_behavior == "always":
                 pass
-            elif params["zero"] == "message":
+            elif zero_behavior == "message":
                 # メッセージ作り直し
                 messages = []
                 messages.append("{}({})の予約本で、届いている本はありません。".format(user.disp_name, user.id))
-            elif params["zero"] == "none":
+            elif zero_behavior == "none":
                 messages = []
 
     return messages
@@ -135,7 +137,7 @@ def _fix_users(params: Dict) -> List[User]:
     for user in users:
         user_dict[user.name] = user
 
-    if params["all_user"]:
+    if params.get("all_user", False):
         return users
     else:
         new_users = []
