@@ -14,7 +14,7 @@ from mmlibrary.books import Books
 
 class TestHtmlParser:
     def setup(self):
-        load_dotenv(dotenv_path=join(dirname(__file__), "../.env"), verbose=True)
+        load_dotenv(dotenv_path=join(dirname(__file__), "../mmlibrary/.env"), verbose=True)
 
     @pytest.mark.slow
     def test_get_rental_books(self):

@@ -6,7 +6,7 @@ from mmlibrary.user import User
 
 class TestUser:
     def setup(self):
-        load_dotenv(dotenv_path=join(dirname(__file__), "../.env"), verbose=True)
+        load_dotenv(dotenv_path=join(dirname(__file__), "../mmlibrary/.env"), verbose=True)
 
     def test_user(self):
         data_json = os.environ["USER_TEST1"]
