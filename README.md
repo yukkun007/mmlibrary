@@ -1,5 +1,7 @@
 # mmlibrary
 
+[![Build Status](https://travis-ci.org/yukkun007/mmlibrary.svg?branch=master)](https://travis-ci.org/yukkun007/mmlibrary)
+
 ![Badge Status](https://travis-ci.org/yukkun007/wisteria.svg?branch=master)
 [![codecov](https://codecov.io/gh/yukkun007/wisteria/branch/master/graph/badge.svg)](https://codecov.io/gh/yukkun007/wisteria)
 
