@@ -1,6 +1,5 @@
 import os
 import logging
-from os.path import join, dirname
 from typing import Dict, List
 from dotenv import load_dotenv
 from mmlibrary.user import User

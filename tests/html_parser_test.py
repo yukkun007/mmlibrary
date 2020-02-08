@@ -1,6 +1,5 @@
 import os
 import pytest
-from os.path import join, dirname
 from unittest.mock import patch
 from dotenv import load_dotenv
 from mmlibrary.user import User
