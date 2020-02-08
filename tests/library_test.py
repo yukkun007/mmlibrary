@@ -1,5 +1,6 @@
 import os
 import pytest
+from os.path import join, dirname
 from typing import List
 from dotenv import load_dotenv
 from mmlibrary.user import User
@@ -10,7 +11,7 @@ from mmlibrary.user_book_info import UserBookInfo
 
 class TestLibrary:
     def setup(self):
-        load_dotenv(verbose=True)
+        load_dotenv(dotenv_path=join(dirname(__file__), "../.env"), verbose=True)
 
     @pytest.fixture()
     def library1(self) -> Library:

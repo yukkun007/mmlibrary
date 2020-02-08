@@ -1,6 +1,7 @@
 import os
 import argparse
 import logging
+from os.path import join, dirname
 from typing import List
 from dotenv import load_dotenv
 from mmlibrary.user import User
@@ -77,7 +78,7 @@ def _print_messages(messages: List[str]):
 
 
 def _show_user_list():
-    load_dotenv(verbose=True)
+    load_dotenv(dotenv_path=join(dirname(__file__), "../.env"), verbose=True)
     users = []
     users.append(User(os.environ["USER1"]))
     users.append(User(os.environ["USER2"]))

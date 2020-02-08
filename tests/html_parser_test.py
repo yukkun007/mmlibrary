@@ -1,5 +1,6 @@
 import os
 import pytest
+from os.path import join, dirname
 from unittest.mock import patch
 from dotenv import load_dotenv
 from mmlibrary.user import User
@@ -13,7 +14,7 @@ from mmlibrary.books import Books
 
 class TestHtmlParser:
     def setup(self):
-        load_dotenv(verbose=True)
+        load_dotenv(dotenv_path=join(dirname(__file__), "../.env"), verbose=True)
 
     @pytest.mark.slow
     def test_get_rental_books(self):
