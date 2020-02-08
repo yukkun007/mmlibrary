@@ -134,7 +134,7 @@ pipenv run doc
 
 ## 配布物関連
 
-<details><summary></summary>
+<details>
 
 ### ソースコード配布物の作成
 
@@ -168,7 +168,7 @@ pip install mmlibrary-0.0.1-py3-none-any.whl
 
 ## 参考
 
-<details><summary></summary>
+<details>
 
 ### パッケージング/開発環境
 
