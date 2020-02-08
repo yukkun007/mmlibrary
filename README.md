@@ -1,10 +1,7 @@
 # mmlibrary
 
 [![Build Status](https://travis-ci.org/yukkun007/mmlibrary.svg?branch=master)](https://travis-ci.org/yukkun007/mmlibrary)
-
-![Badge Status](https://travis-ci.org/yukkun007/wisteria.svg?branch=master)
 [![codecov](https://codecov.io/gh/yukkun007/wisteria/branch/master/graph/badge.svg)](https://codecov.io/gh/yukkun007/wisteria)
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/3cfd46f37e08d3772808/maintainability)](https://codeclimate.com/github/yukkun007/mmlibrary/maintainability)
 [![Requirements Status](https://requires.io/github/yukkun007/mmlibrary/requirements.svg?branch=master)](https://requires.io/github/yukkun007/mmlibrary/requirements/?branch=master)
 
@@ -187,6 +184,6 @@ pip install mmlibrary-0.0.1-py3-none-any.whl
 
 ### TravisCIでファイルを(簡単に)暗号化して使用する
 
-. <https://qiita.com/kmats@github/items/d22fd856883e6c16d7ea>
+- <https://qiita.com/kmats@github/items/d22fd856883e6c16d7ea>
 
 </details>
