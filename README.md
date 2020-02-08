@@ -2,14 +2,21 @@
 
 ![Badge Status](https://travis-ci.org/yukkun007/wisteria.svg?branch=master)
 [![codecov](https://codecov.io/gh/yukkun007/wisteria/branch/master/graph/badge.svg)](https://codecov.io/gh/yukkun007/wisteria)
-[![Maintainability](https://api.codeclimate.com/v1/badges/8b23ee7de6202ce120b1/maintainability)](https://codeclimate.com/github/yukkun007/wisteria/maintainability)
-[![Requirements Status](https://requires.io/github/yukkun007/wisteria/requirements.svg?branch=master)](https://requires.io/github/yukkun007/wisteria/requirements/?branch=master)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/3cfd46f37e08d3772808/maintainability)](https://codeclimate.com/github/yukkun007/mmlibrary/maintainability)
+[![Requirements Status](https://requires.io/github/yukkun007/mmlibrary/requirements.svg?branch=master)](https://requires.io/github/yukkun007/mmlibrary/requirements/?branch=master)
+
+図書館で借りた本, 予約した本の状況を取得するライブラリ。
 
 ## 必要な環境変数
 
+プロジェクトディレクトリ直下に.envファイルを配置して下記を記載。
+
 ```(sh)
-calil_app_key=<please specify calil application key>
-rakuten_app_id=<please specify rakuten application id>
+USER1='{"name": "yukkun007", "disp_name": "表示する名前", "id": "1111111", "password": "xxxxxxx"}'
+USER2='......'
+USER3='......'
+USER4='......'
 ```
 
 ## インストール
@@ -24,19 +31,14 @@ pip install git+https://github.com/yukkun007/mmlibrary
 pip install --upgrade git+https://github.com/yukkun007/mmlibrary
 ```
 
-## 使い方 (モジュールを利用)
+## 使い方 (コードからモジュールを利用)
+
+[参照](#モジュールを利用)
+
+## 使い方 (コマンドラインアプリ)
 
 ```(sh)
-python
->>> import mmlibrary
->>> books = mmlibrary.search_rental(title="test")
->>> print(books)
-```
-
-## 使い方 (コマンドラインアプリを実行)
-
-```(sh)
-mmlibrary
+mmlibrary --help
 ```
 
 ## アンインストール
@@ -49,7 +51,7 @@ pip uninstall mmlibrary
 
 ### 環境構築
 
-1. 環境変数追加 (project ディレクトリに仮想環境作成)
+1. プロジェクトディレクトリに仮想環境を作成するために下記環境変数を追加
 
    - Linux
 
@@ -69,6 +71,14 @@ pip uninstall mmlibrary
 
 ### install package
 
+下記は編集可能モードでインストールされる。
+
+```(sh)
+pip install -e .
+```
+
+通常のインストールは下記だがソース編集の都度`upgrade package`が必要なので基本は`-e`をつける。
+
 ```(sh)
 pip install .
 ```
@@ -79,21 +89,23 @@ pip install .
 pip install --upgrade . (もしくは-U)
 ```
 
-### install package (編集可能モード)
-
-ソース編集の都度 upgrade が不要になる。
-
-```(sh)
-pip install -e .
-```
+## 開発行為
 
 ### モジュールを利用
 
-```(sh)
-python
+```(python)
+$ python
 >>> import mmlibrary
->>> books = mmlibrary.search(title="test")
->>> print(books)
+>>> messages = mmlibrary.search_rental({
+    "mode": "rental",
+    "all_user": False,
+    "users": ["hoge"],
+    "debug": False,
+    "zero_behavior": "message",
+    "separate": False
+})
+>>> import pprint
+>>> pprint.pprint(messages)
 ```
 
 ### コマンドラインアプリを実行
@@ -119,6 +131,10 @@ pipenv run lint
 ```(sh)
 pipenv run doc
 ```
+
+## 配布物関連
+
+<details><summary></summary>
 
 ### ソースコード配布物の作成
 
@@ -148,7 +164,11 @@ python setup.py bdist_wheel (wheelパッケージが必要)
 pip install mmlibrary-0.0.1-py3-none-any.whl
 ```
 
+</details>
+
 ## 参考
+
+<details><summary></summary>
 
 ### パッケージング/開発環境
 
@@ -162,3 +182,9 @@ pip install mmlibrary-0.0.1-py3-none-any.whl
 ### 環境変数の定義
 
 - <https://pod.hatenablog.com/entry/2019/04/29/164109>
+
+### TravisCIでファイルを(簡単に)暗号化して使用する
+
+. <https://qiita.com/kmats@github/items/d22fd856883e6c16d7ea>
+
+</details>
