@@ -78,7 +78,7 @@ def _print_messages(messages: List[str]):
 
 
 def _show_user_list():
-    load_dotenv(dotenv_path=join(dirname(__file__), ".env"), verbose=True)
+    load_dotenv(verbose=True)
     users = []
     users.append(User(os.environ["USER1"]))
     users.append(User(os.environ["USER2"]))

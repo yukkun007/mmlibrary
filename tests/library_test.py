@@ -11,7 +11,7 @@ from mmlibrary.user_book_info import UserBookInfo
 
 class TestLibrary:
     def setup(self):
-        load_dotenv(dotenv_path=join(dirname(__file__), "../mmlibrary/.env"), verbose=True)
+        load_dotenv(verbose=True)
 
     @pytest.fixture()
     def library1(self) -> Library:

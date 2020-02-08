@@ -9,7 +9,7 @@ from mmlibrary.message_maker import MessageMaker
 from mmlibrary.user_book_info import UserBookInfo
 
 
-load_dotenv(dotenv_path=join(dirname(__file__), ".env"), verbose=True)
+load_dotenv(verbose=True)
 
 
 def search_rental(params: Dict) -> List[str]:
