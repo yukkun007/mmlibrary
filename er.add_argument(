@@ -1,0 +1,127 @@
+[1mdiff --git a/mmlibrary/__init__.py b/mmlibrary/__init__.py[m
+[1mindex 78b38c1..3e608e0 100644[m
+[1m--- a/mmlibrary/__init__.py[m
+[1m+++ b/mmlibrary/__init__.py[m
+[36m@@ -1,3 +1,9 @@[m
+[31m-from .core import search_all, search_rental, search_expire, search_reserve, search_prepare[m
+[32m+[m[32mfrom .core import search_rental_all, search_rental, search_expire, search_reserve, search_prepare[m
+ [m
+[31m-__all__ = ["search_all", "search_rental", "search_expire", "search_reserve", "search_prepare"][m
+[32m+[m[32m__all__ = [[m
+[32m+[m[32m    "search_rental_all",[m
+[32m+[m[32m    "search_rental",[m
+[32m+[m[32m    "search_expire",[m
+[32m+[m[32m    "search_reserve",[m
+[32m+[m[32m    "search_prepare",[m
+[32m+[m[32m][m
+[1mdiff --git a/mmlibrary/cli.py b/mmlibrary/cli.py[m
+[1mindex 1f8ea00..7299af9 100644[m
+[1m--- a/mmlibrary/cli.py[m
+[1m+++ b/mmlibrary/cli.py[m
+[36m@@ -4,7 +4,7 @@[m [mimport logging[m
+ from typing import List[m
+ from dotenv import load_dotenv[m
+ from mmlibrary.user import User[m
+[31m-from .core import search_all, search_rental, search_expire, search_reserve, search_prepare[m
+[32m+[m[32mfrom .core import search_rental_all, search_rental, search_expire, search_reserve, search_prepare[m
+ [m
+ [m
+ def main():[m
+[36m@@ -14,21 +14,25 @@[m [mdef main():[m
+     """[m
+     )[m
+ [m
+[32m+[m[32m    parser.add_argument([m
+[32m+[m[32m        "-m",[m
+[32m+[m[32m        "--mode",[m
+[32m+[m[32m        help="検索モードを指定します",[m
+[32m+[m[32m        choices=["all", "rental", "expire", "reserve", "prepare"],[m
+[32m+[m[32m    )[m
+     parser.add_argument("-u", "--users", help="検索対象のユーザを名前(name)で指定します", nargs="*")[m
+     parser.add_argument([m
+[31m-        "-m", "--mode", help="検索モード", choices=["all", "rental", "expire", "reserve", "prepare"][m
+[32m+[m[32m        "-a", "--alluser", help="全ユーザを対象に検索します(--users指定は無効になります)", action="store_true"[m
+     )[m
+     parser.add_argument([m
+         "-z",[m
+         "--zero",[m
+[31m-        help="結果0件の場合の表示モード",[m
+[32m+[m[32m        help="結果0件の場合の表示モードを指定します",[m
+         default="always",[m
+         choices=["always", "message", "none"],[m
+     )[m
+[31m-[m
+[31m-    parser.add_argument("-A", "--alluser", help="全ユーザを対象に検索します", action="store_true")[m
+[31m-    parser.add_argument("-D", "--debug", help="デバッグ出力をONにします", action="store_true")[m
+[31m-    parser.add_argument("-U", "--userlist", help="登録済みユーザのリストを表示します", action="store_true")[m
+[32m+[m[32m    parser.add_argument("-d", "--debug", help="デバッグログ出力をONにします", action="store_true")[m
+[32m+[m[32m    parser.add_argument("-l", "--userlist", help="登録済みユーザのリストを表示します", action="store_true")[m
+ [m
+     args = parser.parse_args()[m
+ [m
+[36m@@ -50,7 +54,7 @@[m [mdef main():[m
+ [m
+     if args.mode == "all":[m
+         # 借りてる + 予約[m
+[31m-        messages = search_all(params)[m
+[32m+[m[32m        messages = search_rental_all(params)[m
+         _print_messages(messages)[m
+     elif args.mode == "rental":[m
+         # 借りてる[m
+[1mdiff --git a/mmlibrary/core.py b/mmlibrary/core.py[m
+[1mindex 870e830..6d3142b 100644[m
+[1m--- a/mmlibrary/core.py[m
+[1m+++ b/mmlibrary/core.py[m
+[36m@@ -11,29 +11,41 @@[m [mfrom mmlibrary.user_book_info import UserBookInfo[m
+ load_dotenv(verbose=True)[m
+ [m
+ [m
+[31m-def search_all(params: Dict) -> List[str]:[m
+[32m+[m[32mdef search_rental_all(params: Dict) -> List[str]:[m
+     library = Library()[m
+     message_maker = MessageMaker()[m
+[31m-[m
+     rental_infos = [][m
+[31m-    reserved_infos = [][m
+[31m-[m
+     messages = [][m
+[32m+[m
+     users = _fix_users(params)[m
+     for user in users:[m
+         # 指定ユーザの借りている本を全て取得[m
+         rental_books = library.get_all_rental_books(user)[m
+         info = UserBookInfo(user, rental_books=rental_books)[m
+         rental_infos.append(info)[m
+[31m-        # 指定ユーザの予約本を全て取得[m
+[31m-        # reserved_books = library.get_all_reserved_books(user)[m
+[31m-        # info = UserBookInfo(user, reserved_books=reserved_books)[m
+[31m-        # reserved_infos.append(info)[m
+ [m
+[31m-    # 各ユーザの借り本・予約本をまとめて表示[m
+[32m+[m[32m    # 各ユーザの借り本をまとめて表示[m
+     messages.append(message_maker.get_all_users_rental_books_message(rental_infos))[m
+[31m-    # TODO[m
+[31m-    # message_maker.get_all_users_reserved_books_message(reserved_infos)[m
+[32m+[m
+[32m+[m[32m    return messages[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef search_reserved_all(params: Dict) -> List[str]:[m
+[32m+[m[32m    library = Library()[m
+[32m+[m[32m    message_maker = MessageMaker()[m
+[32m+[m[32m    reserved_infos = [][m
+[32m+[m[32m    messages = [][m
+[32m+[m
+[32m+[m[32m    users = _fix_users(params)[m
+[32m+[m[32m    for user in users:[m
+[32m+[m[32m        # 指定ユーザの予約本を全て取得[m
+[32m+[m[32m        reserved_books = library.get_all_reserved_books(user)[m
+[32m+[m[32m        info = UserBookInfo(user, reserved_books=reserved_books)[m
+[32m+[m[32m        reserved_infos.append(info)[m
+[32m+[m
+[32m+[m[32m    # 各ユーザの予約本をまとめて表示[m
+[32m+[m[32m    messages.append(message_maker.get_all_users_reserved_books_message(reserved_infos))[m
+[32m+[m
+     return messages[m
+ [m
+ [m

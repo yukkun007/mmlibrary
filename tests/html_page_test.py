@@ -10,7 +10,7 @@ class TestHtmlPages:
         pass
 
     @pytest.fixture()
-    def html_page1(request):
+    def html_page1(self):
         return HtmlPage()
 
     @pytest.mark.slow

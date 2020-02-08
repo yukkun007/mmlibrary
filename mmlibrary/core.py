@@ -11,114 +11,77 @@ from mmlibrary.user_book_info import UserBookInfo
 load_dotenv(verbose=True)
 
 
-def search_all(params: Dict) -> List[str]:
-    library = Library()
-    message_maker = MessageMaker()
-
-    rental_infos = []
-    reserved_infos = []
-
-    messages = []
-    users = _fix_users(params)
-    for user in users:
-        # 指定ユーザの借りている本を全て取得
-        rental_books = library.get_all_rental_books(user)
-        info = UserBookInfo(user, rental_books=rental_books)
-        rental_infos.append(info)
-        # 指定ユーザの予約本を全て取得
-        # reserved_books = library.get_all_reserved_books(user)
-        # info = UserBookInfo(user, reserved_books=reserved_books)
-        # reserved_infos.append(info)
-
-    # 各ユーザの借り本・予約本をまとめて表示
-    messages.append(message_maker.get_all_users_rental_books_message(rental_infos))
-    # TODO
-    # message_maker.get_all_users_reserved_books_message(reserved_infos)
-    return messages
-
-
 def search_rental(params: Dict) -> List[str]:
-    library = Library()
-    message_maker = MessageMaker()
+    library: Library = Library()
+    message_maker: MessageMaker = MessageMaker()
+    rental_infos: List[UserBookInfo] = []
+    messages: List[str] = []
 
-    messages = []
     users = _fix_users(params)
     for user in users:
-        # 指定ユーザの借りている本を全て取得
-        rental_books = library.get_all_rental_books(user)
+        if params.get("mode", "rental") == "expire":
+            # 指定ユーザの借りている本で2日以内に期限切れの本を取得
+            rental_books = library.get_expire_rental_books(user, param={"xdays": 2})
+        else:
+            # 指定ユーザの借りている本を全て取得
+            rental_books = library.get_all_rental_books(user)
+
         info = UserBookInfo(user, rental_books=rental_books)
-        messages.append(message_maker.get_rental_books_message(info))
-    return messages
+        if params.get("separate", False):
+            _append_message(messages, message_maker.get_rental_books_message(info, params))
+        else:
+            rental_infos.append(info)
 
-
-def search_expire(params: Dict) -> List[str]:
-    library = Library()
-    message_maker = MessageMaker()
-
-    messages = []
-    users = _fix_users(params)
-    for user in users:
-        # 指定ユーザの借りている本で2日以内に期限切れの本を取得
-        expire_books = library.get_expire_rental_books(user, param={"xdays": 2})
-        # 0件でも空のリストができているので取り敢えずメッセージ生成
-        if expire_books is not None:
-            info = UserBookInfo(user, rental_books=expire_books)
-            messages.append(message_maker.get_rental_books_message(info))
-
-        # 0件の場合のメッセージ処理
-        if len(expire_books.list) <= 0:
-            zero_behavior = params.get("zero", "always")
-            if zero_behavior == "message":
-                # メッセージ作り直し
-                messages = []
-                messages.append("{}({})の本で、期限切れが近い本はありません。".format(user.disp_name, user.id))
-            elif zero_behavior == "none":
-                messages = []
+    if params.get("separate", False) is False:
+        # 各ユーザの借り本をまとめて表示
+        _append_message(
+            messages, message_maker.get_all_users_rental_books_message(rental_infos, params)
+        )
 
     return messages
+
+
+def _append_message(messages: List[str], message: str) -> None:
+    if message is not None and message is not "":
+        messages.append(message)
+    else:
+        logging.debug("message is not appended. because message is empty.")
 
 
 def search_reserve(params: Dict) -> List[str]:
-    library = Library()
-    message_maker = MessageMaker()
+    library: Library = Library()
+    message_maker: MessageMaker = MessageMaker()
+    reserved_infos: List[UserBookInfo] = []
+    messages: List[str] = []
 
-    messages = []
     users = _fix_users(params)
     for user in users:
-        # 指定ユーザの予約本を全て取得
-        reserved_books = library.get_all_reserved_books(user)
-        info = UserBookInfo(user, reserved_books=reserved_books)
-        messages.append(message_maker.get_reserved_books_message(info))
-    return messages
+        if params.get("mode", "reserve") == "prepare":
+            # 指定ユーザの借りている本を全て取得
+            rental_books = library.get_all_rental_books(user)
+            # 指定ユーザの予約本で「準備完了」「移送中」の本を取得
+            reserved_books = library.get_prepared_reserved_books(user)
+            info = UserBookInfo(user, rental_books=rental_books, reserved_books=reserved_books)
+        else:
+            # 指定ユーザの予約本を全て取得
+            reserved_books = library.get_all_reserved_books(user)
+            info = UserBookInfo(user, reserved_books=reserved_books)
 
+        if params.get("separate", False):
+            if params.get("mode", "reserve") == "prepare":
+                _append_message(
+                    messages, message_maker.get_rental_and_reserved_books_message(info, params)
+                )
+            else:
+                _append_message(messages, message_maker.get_reserved_books_message(info, params))
+        else:
+            reserved_infos.append(info)
 
-def search_prepare(params: Dict) -> List[str]:
-    library = Library()
-    message_maker = MessageMaker()
-
-    messages = []
-    users = _fix_users(params)
-    for user in users:
-        # 指定ユーザの借りている本を全て取得
-        rental_books = library.get_all_rental_books(user)
-        # 指定ユーザの予約本で「準備完了」「移送中」の本を取得
-        prepared_reserved_books = library.get_prepared_reserved_books(user)
-        # 0件でも空のリストができているので取り敢えずメッセージ生成
-        if prepared_reserved_books is not None:
-            info = UserBookInfo(
-                user, rental_books=rental_books, reserved_books=prepared_reserved_books
-            )
-            messages.append(message_maker.get_rental_and_reserved_books_message(info))
-
-        # 0件の場合のメッセージ処理
-        if len(prepared_reserved_books.list) <= 0:
-            zero_behavior = params.get("zero", "always")
-            if zero_behavior == "message":
-                # メッセージ作り直し
-                messages = []
-                messages.append("{}({})の予約本で、届いている本はありません。".format(user.disp_name, user.id))
-            elif zero_behavior == "none":
-                messages = []
+    if params.get("separate", False) is False:
+        # 各ユーザの予約本をまとめて表示
+        _append_message(
+            messages, message_maker.get_all_users_reserved_books_message(reserved_infos, params)
+        )
 
     return messages
 

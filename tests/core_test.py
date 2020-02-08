@@ -1,12 +1,5 @@
 import pytest
-from mmlibrary.core import (
-    search_all,
-    search_rental,
-    search_reserve,
-    search_expire,
-    search_prepare,
-    _fix_users,
-)
+from mmlibrary.core import search_rental, search_reserve, _fix_users, _append_message
 
 
 class TestCore:
@@ -14,31 +7,46 @@ class TestCore:
         pass
 
     @pytest.mark.slow
-    def test_search_all(self):
-        params = {"all_user": False, "users": ["yutaka"], "debug": True}
-        search_all(params)
-
-    @pytest.mark.slow
-    def test_search_rental(self):
-        params = {"all_user": False, "users": ["yutaka"], "debug": False}
+    @pytest.mark.parametrize(
+        "mode, zero_behavior, separate",
+        [
+            ("rental", "message", False),
+            ("rental", "none", True),
+            ("expire", "message", True),
+            ("expire", "none", False),
+        ],
+    )
+    def test_search_rental(self, mode, zero_behavior, separate):
+        params = {
+            "mode": mode,
+            "all_user": False,
+            "users": ["yutaka"],
+            "debug": False,
+            "zero_behavior": zero_behavior,
+            "separate": separate,
+        }
         search_rental(params)
 
     @pytest.mark.slow
-    def test_search_reserve(self):
-        params = {"all_user": True, "users": ["yutaka"], "debug": False}
+    @pytest.mark.parametrize(
+        "mode, zero_behavior, separate",
+        [
+            ("reserve", "message", False),
+            ("reserve", "none", True),
+            ("prepare", "message", True),
+            ("prepare", "none", False),
+        ],
+    )
+    def test_search_reserve(self, mode, zero_behavior, separate):
+        params = {
+            "mode": mode,
+            "all_user": True,
+            "users": ["yutaka"],
+            "debug": False,
+            "zero_behavior": zero_behavior,
+            "separate": separate,
+        }
         search_reserve(params)
-
-    @pytest.mark.slow
-    @pytest.mark.parametrize("zero_behavior", [("message"), ("none")])
-    def test_search_expire(self, zero_behavior):
-        params = {"all_user": False, "users": ["yutaka"], "debug": False, "zero": zero_behavior}
-        search_expire(params)
-
-    @pytest.mark.slow
-    @pytest.mark.parametrize("zero_behavior", [("message"), ("none")])
-    def test_search_prepare(self, zero_behavior):
-        params = {"all_user": False, "users": ["yutaka"], "debug": False, "zero": zero_behavior}
-        search_prepare(params)
 
     def test_fix_users_all(self):
         params = {"all_user": True, "users": ["hoge"], "debug": False}
@@ -54,3 +62,6 @@ class TestCore:
         params = {"all_user": False, "users": ["hoge"], "debug": False}
         users = _fix_users(params)
         assert len(users) == 0
+
+    def test_append_message_empty(self):
+        _append_message([], "")
