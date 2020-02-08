@@ -16,6 +16,7 @@ install:
     - whereis chromedriver
     - pip install pipenv
     - pipenv sync --dev
+    - pip install .
 before_script:
     - flake8 --max-line-length=100 --ignore=E203,W503 ./mmlibrary
 script:
