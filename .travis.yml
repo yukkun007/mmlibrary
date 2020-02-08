@@ -18,7 +18,7 @@ install:
     - whereis chromedriver
     - pip install pipenv
     - pipenv sync --dev
-    - pip install .
+    - pip install -e .
     - pwd
     - ls -al
 before_script:
