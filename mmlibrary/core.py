@@ -42,7 +42,7 @@ def search_rental(params: Dict) -> List[str]:
 
 
 def _append_message(messages: List[str], message: str) -> None:
-    if message is not None and message is not "":
+    if message is not None and message != "":
         messages.append(message)
     else:
         logging.debug("message is not appended. because message is empty.")
