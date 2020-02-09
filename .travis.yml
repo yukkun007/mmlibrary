@@ -15,7 +15,7 @@ install:
     - whereis google-chrome-stable
     - whereis chromedriver
     - pip install pipenv
-    - pipenv sync --dev
+    - pipenv install --dev
     - pip install -e .
 before_script:
     - flake8 --max-line-length=100 --ignore=E203,W503 ./mmlibrary
@@ -24,4 +24,4 @@ script:
     - bash <(curl -s https://codecov.io/bash)
 notifications:
     slack:
-        secure: R0B6FLUM7xXnePVyC3WG31jAI8qrPL2SYYqg6WEuMsDML84o+GSuYxW4EHJwKU89aO+LgX6YgkO+tVvCxnMszqaanFkeCsNM5Ni/R13+Xor6wlLiE1ibFMRQMFEdrXqwxVlIGvKvxnsSfENZWA1ls/BGFgBhdqj0EIUEcyBt5I7D1ZEB1WfEL0fUD9uDXE52FM9ZOBl38xMghEMVcmZd6EIGXDYGuVU5lQkcPznYdiQSUdFXvxOBRbB9IjE7vr2+OZJ4SrJvcVW82J+hSRjZunLzP2LwiMsq7RNFrxrNjFIlbxZC/Z5Kgjjsy2W99uXvNXFThCHvWR2ChksuXmfy9iluu/zPLQN+2UDLF6LMUKdyleQU751CKeVQb5Dd1S7C0vbMSxQaJuCo35jwvGHnk641p/b/lFygsBvK7Lc4/AUK0Dp96H3pRaiABEo1enkOLRayT6GC/er20BPUeSbIdIDXVWiyYCTjVM2e3A5r2MCmuXNifXL3yR7jnZbN6SH8kmeQKqQqBDrBu/PYG6IZSPi9T6F2JBR/HCY53NXcqgHfL8yVG9kKhlxgdBHCUl882JIgqQLfNldejL0sNITpf/ifBfOKR+ZZ3QBhiQ1WmmsSdF/Use+A0DIUjBnAWxWL++/D9gsyTwTy7GUU4a+Z1xzHiZ+u5QS4070Tg+IRCIY=
+        secure: BhN8SJIStzxo00c/Eu019M4TMF0skzQqBtKDeMREoDTn/Sfo1eJNY52Sdg2vGbEygua/az/a9OOfEuDEuU367SFpwQq7BF4pE0w/5Zxkf/WKTisRUk3zvzulylsNF5RM6sYJw8SDbJyzr/Gv8elSlUX/yUpm4/BKnkI88p/wzKywSiTyXnRi29bpsnGSGy8c+KrPJYKnClts2HoDKApCfdKtwkBLW3IHn9Re/E0WQQUuYNUdhgqCYiRFegCXlMsJ1gEwAZuAurnioruDENKqmqrP3ceTgYs1kPZEwzZFuE8A3pHWf2ZJE2T1dUcxSV0Q2fpn31Y+mps2cDX4VZO4IGp8rddUW3QKFwYwMmmg6fPkmL/MqirfkxzXKN56IrXgYm8wWwPW7H1O2UV9Cyp4zgQVHIctLCQ87nrwkTaWAtXBbVjXti29HOf6orhYbqZAxyxmD7tIdokj2k0qGbiV0Asxe52UT3kFaCepUZllpa3roxWBFypIunNQ5kJyHeUszW+4oIp7LCZpT/KSMcyh8S/P6WuF4eIWeBQGkyBbJ2YXo7xbeJSw7GboaFtaKcaz4oI927Mn4+F65KN4wRnQnplbojJOPI7aK5Vfy+wht07vPiA3jWTF+alGOktQhFzb5f/B0DnG/g6L7zIlBcxfuOYGqTyeutPA7MPw7oKdVTs=
