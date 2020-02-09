@@ -25,7 +25,13 @@ setup(
     include_package_data=True,
     zip_safe=False,
     python_requires=">=3.6",
-    install_requires=[],
+    install_requires=[
+        "python-dotenv",
+        "python-dateutil",
+        "selenium",
+        "beautifulsoup4",
+        "jinja2"
+    ],
     entry_points="""
         [console_scripts]
         {app} = {app}.cli:main
