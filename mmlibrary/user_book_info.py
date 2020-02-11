@@ -13,3 +13,14 @@ class UserBookInfo:
         self.user = user
         self.rental_books = rental_books
         self.reserved_books = reserved_books
+
+    def __str__(self):
+        string = """
+username: {}
+rentals:
+{}
+reserved:
+{}""".format(
+            self.user.disp_name, self.rental_books, self.reserved_books
+        )
+        return string

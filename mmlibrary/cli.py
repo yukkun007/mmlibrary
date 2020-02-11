@@ -1,9 +1,10 @@
 import os
 import argparse
 import logging
-from typing import List
+from typing import List, Union
 from dotenv import load_dotenv
 from mmlibrary.user import User
+from mmlibrary.user_book_info import UserBookInfo
 from .core import search_rental, search_reserve
 
 
@@ -28,6 +29,7 @@ def main():
         default="always",
         choices=["always", "message", "none"],
     )
+    parser.add_argument("-r", "--result_type", help="取得する結果の形式を指定します", choices=["message", "info"])
     parser.add_argument("-s", "--separate", help="結果をユーザごとに個別表示します", action="store_true")
     parser.add_argument("-d", "--debug", help="デバッグログ出力をONにします", action="store_true")
     parser.add_argument("-l", "--userlist", help="登録済みユーザのリストを表示します", action="store_true")
@@ -54,25 +56,26 @@ def main():
         "users": args.users,
         "zero": args.zero,
         "separate": args.separate,
+        "result_type": args.result_type,
     }
 
     if args.mode == "rental" or args.mode == "expire":
         # 借りてる系
-        messages = search_rental(params)
-        _print_messages(messages)
+        result = search_rental(params)
+        _print_result(result)
     elif args.mode == "reserve" or args.mode == "prepare":
         # 予約系
-        messages = search_reserve(params)
-        _print_messages(messages)
+        result = search_reserve(params)
+        _print_result(result)
     else:
         parser.print_help()
 
 
-def _print_messages(messages: List[str]):
-    if len(messages) > 0:
+def _print_result(result_list: Union[List[str], List[UserBookInfo]]):
+    if len(result_list) > 0:
         print("=====================================")
-    for message in messages:
-        print(message)
+    for result in result_list:
+        print(result)
         print("=====================================")
 
 

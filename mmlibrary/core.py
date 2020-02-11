@@ -1,6 +1,6 @@
 import os
 import logging
-from typing import Dict, List
+from typing import Dict, List, Union
 from dotenv import load_dotenv
 from mmlibrary.user import User
 from mmlibrary.library import Library
@@ -11,7 +11,7 @@ from mmlibrary.user_book_info import UserBookInfo
 load_dotenv(verbose=True)
 
 
-def search_rental(params: Dict) -> List[str]:
+def search_rental(params: Dict) -> Union[List[str], List[UserBookInfo]]:
     library: Library = Library()
     message_maker: MessageMaker = MessageMaker()
     rental_infos: List[UserBookInfo] = []
@@ -29,8 +29,8 @@ def search_rental(params: Dict) -> List[str]:
         info = UserBookInfo(user, rental_books=rental_books)
         if params.get("separate", False):
             _append_message(messages, message_maker.get_rental_books_message(info, params))
-        else:
-            rental_infos.append(info)
+
+        rental_infos.append(info)
 
     if params.get("separate", False) is False:
         # 各ユーザの借り本をまとめて表示
@@ -38,7 +38,10 @@ def search_rental(params: Dict) -> List[str]:
             messages, message_maker.get_all_users_rental_books_message(rental_infos, params)
         )
 
-    return messages
+    if params.get("result_type", "message") == "message":
+        return messages
+    else:
+        return rental_infos
 
 
 def _append_message(messages: List[str], message: str) -> None:
@@ -48,7 +51,7 @@ def _append_message(messages: List[str], message: str) -> None:
         logging.debug("message is not appended. because message is empty.")
 
 
-def search_reserve(params: Dict) -> List[str]:
+def search_reserve(params: Dict) -> Union[List[str], List[UserBookInfo]]:
     library: Library = Library()
     message_maker: MessageMaker = MessageMaker()
     reserved_infos: List[UserBookInfo] = []
@@ -74,8 +77,8 @@ def search_reserve(params: Dict) -> List[str]:
                 )
             else:
                 _append_message(messages, message_maker.get_reserved_books_message(info, params))
-        else:
-            reserved_infos.append(info)
+
+        reserved_infos.append(info)
 
     if params.get("separate", False) is False:
         # 各ユーザの予約本をまとめて表示
@@ -83,7 +86,10 @@ def search_reserve(params: Dict) -> List[str]:
             messages, message_maker.get_all_users_reserved_books_message(reserved_infos, params)
         )
 
-    return messages
+    if params.get("result_type", "message") == "message":
+        return messages
+    else:
+        return reserved_infos
 
 
 def _fix_users(params: Dict) -> List[User]:

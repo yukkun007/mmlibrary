@@ -24,4 +24,6 @@ class RentalBooks(Books):
     def _can_extend_period(self, text: str) -> bool:
         if "延長できません" in text:
             return False
+        if "すでに延長されています" in text:
+            return False
         return True

@@ -41,7 +41,7 @@ class RentalBook:
         return text
 
     def get_list_string(self) -> str:
-        string = "{},{},{},{}".format(
+        string = "{},{},extend={},{}".format(
             self.name, self.expire_date, self.can_extend_period, self.extend_period_button_name
         )
         return string

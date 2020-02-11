@@ -8,15 +8,15 @@ class TestCore:
 
     @pytest.mark.slow
     @pytest.mark.parametrize(
-        "mode, zero_behavior, separate",
+        "mode, zero_behavior, separate, result_type",
         [
-            ("rental", "message", False),
-            ("rental", "none", True),
-            ("expire", "message", True),
-            ("expire", "none", False),
+            ("rental", "message", False, "info"),
+            ("rental", "none", True, "message"),
+            ("expire", "message", True, "info"),
+            ("expire", "none", False, "message"),
         ],
     )
-    def test_search_rental(self, mode, zero_behavior, separate):
+    def test_search_rental(self, mode, zero_behavior, separate, result_type):
         params = {
             "mode": mode,
             "all_user": False,
@@ -24,20 +24,21 @@ class TestCore:
             "debug": False,
             "zero_behavior": zero_behavior,
             "separate": separate,
+            "result_type": result_type,
         }
         search_rental(params)
 
     @pytest.mark.slow
     @pytest.mark.parametrize(
-        "mode, zero_behavior, separate",
+        "mode, zero_behavior, separate, result_type",
         [
-            ("reserve", "message", False),
-            ("reserve", "none", True),
-            ("prepare", "message", True),
-            ("prepare", "none", False),
+            ("reserve", "message", False, "info"),
+            ("reserve", "none", True, "message"),
+            ("prepare", "message", True, "info"),
+            ("prepare", "none", False, "message"),
         ],
     )
-    def test_search_reserve(self, mode, zero_behavior, separate):
+    def test_search_reserve(self, mode, zero_behavior, separate, result_type):
         params = {
             "mode": mode,
             "all_user": True,
@@ -45,6 +46,7 @@ class TestCore:
             "debug": False,
             "zero_behavior": zero_behavior,
             "separate": separate,
+            "result_type": result_type,
         }
         search_reserve(params)
 
