@@ -1,6 +1,7 @@
-􀁢貸出状況􀁢
+{%- if header -%}􀁢貸出状況􀁢
 
-{%- if rental_books.len > 0 %}
+{%- endif -%}
+{%- if rental_books.len > 0 -%}
 ───────────
 {% if rental_books.filter_type == "rental_normal" -%}
 􀂏{{ user.disp_name }}({{ user.id }})

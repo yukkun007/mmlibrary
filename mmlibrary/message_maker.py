@@ -106,6 +106,7 @@ class MessageMaker:
             "user": info.user,
             "rental_books": info.rental_books,
             "date_keyed_books_dict": date_keyed_books_dict,
+            "header": params.get("header", False),
         }
         return Message.create(MessageMaker.TEMPLATE_RENTAL_BOOKS, data)
 
