@@ -1,3 +1,5 @@
+􀁢貸出状況􀁢
+
 {%- if rental_books.len > 0 %}
 ───────────
 {% if rental_books.filter_type == "rental_normal" -%}

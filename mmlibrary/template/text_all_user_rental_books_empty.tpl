@@ -1,3 +1,5 @@
+􀁢貸出状況􀁢
+
 {% if rental_books.filter_type == "rental_normal" -%}
 貸出本はありません。
 {%- elif rental_books.filter_type == "rental_expired" -%}

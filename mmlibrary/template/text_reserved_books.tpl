@@ -1,3 +1,5 @@
+􀁡予約状況􀁡
+
 {%- if reserved_books.len > 0 %}
 ───────────
 {% if reserved_books.is_prepared %}􀁹{% else %}􀂐{% endif %}{{ user.disp_name }}({{ user.id }})
