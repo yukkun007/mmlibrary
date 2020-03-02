@@ -33,27 +33,30 @@ class MessageMaker:
             if zero_behavior == "message":
                 return Message.create(
                     MessageMaker.TEMPLATE_ALL_USER_RENTAL_BOOKS_EMPTY,
-                    {"rental_books": info.rental_books, "header": params.get("header", False)},
+                    {"rental_books": info.rental_books, "header": True},
                 )
             elif zero_behavior == "none":
                 return ""
 
         # 1人のユーザでも貸出本が1件以上ある場合のメッセージを作成
-        data = {"sub_message": sub_message, "header": params.get("header", False)}
+        data = {"sub_message": sub_message, "header": True}
         return Message.create(MessageMaker.TEMPLATE_ALL_USER_RENTAL_BOOKS, data)
 
     def get_all_users_reserved_books_message(
         self, infos: List[UserBookInfo], params: Dict = {}
     ) -> str:
         sub_message = ""
+        sub_message_list = []
         is_all_empty = True
         is_prepared = False
         for info in infos:
-            sub_message += self.get_reserved_books_message(info, params)
+            sub_message_list.append(self.get_reserved_books_message(info, params))
+            # sub_message += self.get_reserved_books_message(info, params)
             if len(info.reserved_books.list) > 0:
                 is_all_empty = False
             if info.reserved_books.is_prepared():
                 is_prepared = True
+        sub_message = "\n".join(sub_message_list)
 
         if is_all_empty:
             # 全ユーザの予約本が0件の場合のメッセージを作成
@@ -61,7 +64,7 @@ class MessageMaker:
             if zero_behavior == "message":
                 return Message.create(
                     MessageMaker.TEMPLATE_ALL_USER_RESERVED_BOOKS_EMPTY,
-                    {"reserved_books": info.reserved_books, "header": params.get("header", False)},
+                    {"reserved_books": info.reserved_books, "header": True},
                 )
             elif zero_behavior == "none":
                 return ""
@@ -70,7 +73,7 @@ class MessageMaker:
         data = {
             "sub_message": sub_message,
             "is_prepared": is_prepared,
-            "header": params.get("header", False),
+            "header": True,  # 常に表示
         }
         return Message.create(MessageMaker.TEMPLATE_ALL_USER_RESERVED_BOOKS, data)
 
