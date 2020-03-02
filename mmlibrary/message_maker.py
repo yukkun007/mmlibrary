@@ -56,7 +56,7 @@ class MessageMaker:
                 is_all_empty = False
             if info.reserved_books.is_prepared():
                 is_prepared = True
-        sub_message = "\n".join(sub_message_list)
+        sub_message = "\n\n".join(sub_message_list)
 
         if is_all_empty:
             # 全ユーザの予約本が0件の場合のメッセージを作成
