@@ -33,13 +33,13 @@ class MessageMaker:
             if zero_behavior == "message":
                 return Message.create(
                     MessageMaker.TEMPLATE_ALL_USER_RENTAL_BOOKS_EMPTY,
-                    {"rental_books": info.rental_books},
+                    {"rental_books": info.rental_books, "header": params.get("header", False)},
                 )
             elif zero_behavior == "none":
                 return ""
 
         # 1人のユーザでも貸出本が1件以上ある場合のメッセージを作成
-        data = {"sub_message": sub_message}
+        data = {"sub_message": sub_message, "header": params.get("header", False)}
         return Message.create(MessageMaker.TEMPLATE_ALL_USER_RENTAL_BOOKS, data)
 
     def get_all_users_reserved_books_message(
@@ -61,13 +61,17 @@ class MessageMaker:
             if zero_behavior == "message":
                 return Message.create(
                     MessageMaker.TEMPLATE_ALL_USER_RESERVED_BOOKS_EMPTY,
-                    {"reserved_books": info.reserved_books},
+                    {"reserved_books": info.reserved_books, "header": params.get("header", False)},
                 )
             elif zero_behavior == "none":
                 return ""
 
         # 1人のユーザでも予約本が1件以上ある場合のメッセージを作成
-        data = {"sub_message": sub_message, "is_prepared": is_prepared}
+        data = {
+            "sub_message": sub_message,
+            "is_prepared": is_prepared,
+            "header": params.get("header", False),
+        }
         return Message.create(MessageMaker.TEMPLATE_ALL_USER_RESERVED_BOOKS, data)
 
     def get_rental_and_reserved_books_message(self, info: UserBookInfo, params: Dict = {}) -> str:
@@ -78,14 +82,22 @@ class MessageMaker:
             if zero_behavior == "message":
                 return Message.create(
                     MessageMaker.TEMPLATE_RESERVED_BOOKS_EMPTY,
-                    {"user": info.user, "reserved_books": info.reserved_books},
+                    {
+                        "user": info.user,
+                        "reserved_books": info.reserved_books,
+                        "header": params.get("header", False),
+                    },
                 )
             elif zero_behavior == "none":
                 return ""
 
         sub_message1 = self.get_rental_books_message(info, params)
         sub_message2 = self.get_reserved_books_message(info, params)
-        data = {"sub_message1": sub_message1, "sub_message2": sub_message2}
+        data = {
+            "sub_message1": sub_message1,
+            "sub_message2": sub_message2,
+            "header": params.get("header", False),
+        }
         return Message.create(MessageMaker.TEMPLATE_RENTAL_AND_RESERVED_BOOKS, data)
 
     def get_rental_books_message(self, info: UserBookInfo, params: Dict = {}) -> str:
@@ -95,7 +107,11 @@ class MessageMaker:
             if zero_behavior == "message":
                 return Message.create(
                     MessageMaker.TEMPLATE_RENTAL_BOOKS_EMPTY,
-                    {"user": info.user, "rental_books": info.rental_books},
+                    {
+                        "user": info.user,
+                        "rental_books": info.rental_books,
+                        "header": params.get("header", False),
+                    },
                 )
             elif zero_behavior == "none":
                 return ""
@@ -123,10 +139,18 @@ class MessageMaker:
             if zero_behavior == "message":
                 return Message.create(
                     MessageMaker.TEMPLATE_RESERVED_BOOKS_EMPTY,
-                    {"user": info.user, "reserved_books": info.reserved_books},
+                    {
+                        "user": info.user,
+                        "reserved_books": info.reserved_books,
+                        "header": params.get("header", False),
+                    },
                 )
             elif zero_behavior == "none":
                 return ""
 
-        data = {"user": info.user, "reserved_books": info.reserved_books}
+        data = {
+            "user": info.user,
+            "reserved_books": info.reserved_books,
+            "header": params.get("header", False),
+        }
         return Message.create(MessageMaker.TEMPLATE_RESERVED_BOOKS, data)
