@@ -21,11 +21,13 @@ class MessageMaker:
         self, infos: List[UserBookInfo], params: Dict = {}
     ) -> str:
         sub_message = ""
+        sub_message_list = []
         is_all_empty = True
         for info in infos:
-            sub_message += self.get_rental_books_message(info, params)
+            sub_message_list.append(self.get_rental_books_message(info, params))
             if len(info.rental_books.list) > 0:
                 is_all_empty = False
+        sub_message = "\n\n".join(sub_message_list)
 
         if is_all_empty:
             # 全ユーザの貸出本が0件の場合のメッセージを作成
@@ -51,7 +53,6 @@ class MessageMaker:
         is_prepared = False
         for info in infos:
             sub_message_list.append(self.get_reserved_books_message(info, params))
-            # sub_message += self.get_reserved_books_message(info, params)
             if len(info.reserved_books.list) > 0:
                 is_all_empty = False
             if info.reserved_books.is_prepared():
