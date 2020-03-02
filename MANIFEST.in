@@ -1,6 +1,7 @@
 include tox.ini
 include .env
 
+graft mmlibrary/template
 graft tests
 graft examples
 graft docs
