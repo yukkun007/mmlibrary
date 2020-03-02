@@ -17,5 +17,4 @@
 ■受取館：{{ book.receive_lib }}
 ■取置期限日：{{ book.torioki_date }}
 ■順位：{% if book.is_prepared == True %}-{% elif book.is_dereverd == True %}-{% else %}{{ book.order }}{% endif %}
-
 {% endfor -%}
