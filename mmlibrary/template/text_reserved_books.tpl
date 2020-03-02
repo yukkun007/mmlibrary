@@ -1,6 +1,7 @@
-􀁡予約状況􀁡
+{%- if header -%}􀁡予約状況􀁡
 
-{%- if reserved_books.len > 0 %}
+{% endif -%}
+{%- if reserved_books.len > 0 -%}
 ───────────
 {% if reserved_books.is_prepared %}􀁹{% else %}􀂐{% endif %}{{ user.disp_name }}({{ user.id }})
 　　　対象：{{ reserved_books.len }}冊
