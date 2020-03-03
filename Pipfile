@@ -9,6 +9,7 @@ python-dateutil = "==2.8.1"
 selenium = "==3.141.0"
 beautifulsoup4 = "==4.8.2"
 jinja2 = "==2.11.1"
+chromedriver-binary = "==80.0.3987.106.0"
 
 [dev-packages]
 flake8 = "==3.7.9"

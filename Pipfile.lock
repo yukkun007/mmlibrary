@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5a12878217bb6dae0e9b4df0efe09201c127aae4e05c61251efc26634f6bae30"
+            "sha256": "f9b73fdc63eae1c954ca9662b92339bbff9651e6e83080b97d1c62bc94f07f97"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -24,6 +24,13 @@
             ],
             "index": "pypi",
             "version": "==4.8.2"
+        },
+        "chromedriver-binary": {
+            "hashes": [
+                "sha256:0fbe56ae3a81cb9f1d54260fc29a628e3943c968647b0e67c072a5c5ee3c2a02"
+            ],
+            "index": "pypi",
+            "version": "==80.0.3987.106.0"
         },
         "jinja2": {
             "hashes": [
@@ -576,10 +583,10 @@
         },
         "zipp": {
             "hashes": [
-                "sha256:12248a63bbdf7548f89cb4c7cda4681e537031eda29c02ea29674bc6854460c2",
-                "sha256:7c0f8e91abc0dc07a5068f315c52cb30c66bfbc581e5b50704c8a2f6ebae794a"
+                "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b",
+                "sha256:c599e4d75c98f6798c509911d08a22e6c021d074469042177c8c86fb92eefd96"
             ],
-            "version": "==3.0.0"
+            "version": "==3.1.0"
         }
     }
 }

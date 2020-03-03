@@ -30,7 +30,8 @@ setup(
         "python-dateutil",
         "selenium",
         "beautifulsoup4",
-        "jinja2"
+        "jinja2",
+        "chromedriver-binary",
     ],
     entry_points="""
         [console_scripts]
