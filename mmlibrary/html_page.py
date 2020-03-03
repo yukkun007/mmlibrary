@@ -1,5 +1,5 @@
 import logging
-import chromedriver_binary
+import chromedriver_binary  # noqa
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
