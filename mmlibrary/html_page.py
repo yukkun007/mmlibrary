@@ -27,7 +27,7 @@ class HtmlPage:
         options.add_argument("--lang=ja")
         # 画像を読み込まないで軽くする
         options.add_argument("--blink-settings=imagesEnabled=false")
-        self.driver = Chrome(executable_path="/usr/local/bin/chromedriver", options=options)
+        self.driver = Chrome(options=options)
         logging.debug("driver.create/end")
 
     def _wait(self) -> None:
