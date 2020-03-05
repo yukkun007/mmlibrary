@@ -1,5 +1,5 @@
+import os
 import logging
-import chromedriver_binary  # noqa
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
@@ -11,8 +11,12 @@ class HtmlPage:
     def __init__(self) -> None:
         logging.debug("driver.create/start")
         options = ChromeOptions()
+        binary_location = os.environ.get("CHROME_BINARY_LOCATION", None)
+        if not (binary_location is None):
+            options.binary_location = binary_location
         # 必須
         options.add_argument("--headless")
+        options.add_argument("--no-sandbox")
         options.add_argument("--disable-gpu")
         # エラーの許容
         options.add_argument("--ignore-certificate-errors")
@@ -28,7 +32,10 @@ class HtmlPage:
         options.add_argument("--lang=ja")
         # 画像を読み込まないで軽くする
         options.add_argument("--blink-settings=imagesEnabled=false")
-        self.driver = Chrome(options=options)
+
+        # chromedriver生成
+        executable_path = os.environ.get("CHROME_DRIVER_LOCATION", None)
+        self.driver = Chrome(options=options, executable_path=executable_path)
         logging.debug("driver.create/end")
 
     def _wait(self) -> None:

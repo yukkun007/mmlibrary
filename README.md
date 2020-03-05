@@ -18,6 +18,32 @@ USER3='......'
 USER4='......'
 ```
 
+## 依存
+
+下記が必要。  
+バージョンを合わせる必要がある。  
+
+- Chrome(headless-chromium)
+- [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads)
+
+### Chrome
+
+AWS(lambda)で動作させる場合、[serverless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)が使える。  
+[ここ](https://hacknote.jp/archives/49974/)の通り、lambda layerにあげて使う。  
+layerでは/opt/に配置されるので下記環境変数で場所を指定する。  
+
+```(sh)
+CHROME_BINARY_LOCATION='/opt/headless/python/bin/headless-chromium'
+```
+
+#### [serverless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)のChromeバージョン
+
+[serverless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)の最新バージョンは69.0.3497.81なので、ChromeDriverのバージョンを合わせ2.43 or 2.44にする必要がある。  
+
+### ChromeDriver
+
+ChromeDriverはpythonモジュール([chromedriver-binary](https://pypi.org/project/chromedriver-binary/#history))でも導入出来るが複雑になるのでやってない。
+
 ## インストール
 
 ```(sh)

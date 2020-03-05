@@ -4,17 +4,28 @@ python:
 before_install:
     - openssl aes-256-cbc -K $encrypted_d3fdd438caa1_key -iv $encrypted_d3fdd438caa1_iv -in .env.enc -out .env -d
 addons:
+    # https://docs.travis-ci.com/user/chrome
+    # stable or beta
     chrome: stable
 install:
-    # - wget -N https://chromedriver.storage.googleapis.com/80.0.3987.16/chromedriver_linux64.zip -P ~/
-    # - unzip ~/chromedriver_linux64.zip -d ~/
-    # - rm ~/chromedriver_linux64.zip
-    # - sudo mv -f ~/chromedriver /usr/local/share/
-    # - sudo chmod +x /usr/local/share/chromedriver
-    # - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+    # ------------------
+    # check chrome
+    # ------------------
     - whereis google-chrome-stable
     - google-chrome-stable --version
-    # - whereis chromedriver
+    # ------------------
+    # install chromedriver
+    # ------------------
+    - wget -N https://chromedriver.storage.googleapis.com/80.0.3987.16/chromedriver_linux64.zip -P ~/
+    - unzip ~/chromedriver_linux64.zip -d ~/
+    - rm ~/chromedriver_linux64.zip
+    - sudo mv -f ~/chromedriver /usr/local/share/
+    - sudo chmod +x /usr/local/share/chromedriver
+    - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+    - whereis chromedriver
+    # ------------------
+    # python module
+    # ------------------
     - pip install pipenv
     - pipenv install --dev
     - pip install -e .
