@@ -35,6 +35,9 @@ class HtmlPage:
 
         # chromedriver生成
         executable_path = os.environ.get("CHROME_DRIVER_LOCATION", None)
+        print(">>>>>>>executable_path>>>>>>>>>>>>")
+        print(executable_path)
+        print(">>>>>>>executable_path>>>>>>>>>>>>")
         self.driver = Chrome(options=options, executable_path=executable_path)
         logging.debug("driver.create/end")
 
