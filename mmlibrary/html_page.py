@@ -1,5 +1,8 @@
 import os
+import getpass
+import pwd
 import logging
+import subprocess
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
@@ -8,6 +11,9 @@ from mmlibrary.user import User
 
 
 class HtmlPage:
+    def res_cmd(self, cmd):
+        return subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True).communicate()[0]
+
     def __init__(self) -> None:
         logging.debug("driver.create/start")
         options = ChromeOptions()
@@ -35,6 +41,25 @@ class HtmlPage:
 
         # chromedriver生成
         executable_path = os.environ.get("CHROME_DRIVER_LOCATION", None)
+        print(">>>>>>>user>>>>>>>>>>>>")
+        print(os.getlogin())
+        print(getpass.getuser())
+        print(os.environ.get("USER"))
+        print(pwd.getpwuid(os.getuid())[0])
+        print(">>>>>>>user>>>>>>>>>>>>")
+        print(">>>>>>>path>>>>>>>>>>>>")
+        print(os.environ["PATH"])
+        print(">>>>>>>path>>>>>>>>>>>>")
+        print(">>>>>>>command>>>>>>>>>>>>")
+        cmd = "whereis chromedriver"
+        print(self.res_cmd(cmd))
+        cmd = "ls -alh /usr/bin/chromedriver"
+        print(self.res_cmd(cmd))
+        cmd = "ls -alh /opt/chromedriver-75.0.3770.140"
+        print(self.res_cmd(cmd))
+        cmd = "chromedriver --version"
+        print(self.res_cmd(cmd))
+        print(">>>>>>>command>>>>>>>>>>>>")
         print(">>>>>>>executable_path>>>>>>>>>>>>")
         print(executable_path)
         print(">>>>>>>executable_path>>>>>>>>>>>>")
