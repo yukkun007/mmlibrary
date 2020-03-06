@@ -41,12 +41,6 @@ class HtmlPage:
 
         # chromedriver生成
         executable_path = os.environ.get("CHROME_DRIVER_LOCATION", None)
-        print(">>>>>>>user>>>>>>>>>>>>")
-        print(os.getlogin())
-        print(getpass.getuser())
-        print(os.environ.get("USER"))
-        print(pwd.getpwuid(os.getuid())[0])
-        print(">>>>>>>user>>>>>>>>>>>>")
         print(">>>>>>>path>>>>>>>>>>>>")
         print(os.environ["PATH"])
         print(">>>>>>>path>>>>>>>>>>>>")
@@ -60,6 +54,12 @@ class HtmlPage:
         cmd = "chromedriver --version"
         print(self.res_cmd(cmd))
         print(">>>>>>>command>>>>>>>>>>>>")
+        print(">>>>>>>user>>>>>>>>>>>>")
+        print(getpass.getuser())
+        print(os.environ.get("USER"))
+        print(pwd.getpwuid(os.getuid())[0])
+        # print(os.getlogin())
+        print(">>>>>>>user>>>>>>>>>>>>")
         print(">>>>>>>executable_path>>>>>>>>>>>>")
         print(executable_path)
         print(">>>>>>>executable_path>>>>>>>>>>>>")
