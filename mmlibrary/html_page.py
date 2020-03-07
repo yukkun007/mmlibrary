@@ -18,11 +18,15 @@ class HtmlPage:
         logging.debug("driver.create/start")
         options = ChromeOptions()
         binary_location = os.environ.get("CHROME_BINARY_LOCATION", None)
+        print(">>>>>>>chrome binary_location>>>>>>>>>>>>")
+        print(binary_location)
         if not (binary_location is None):
+            print(">>>>>>>chrome binary_location>>>>>>>>>>>>")
             options.binary_location = binary_location
         # 必須
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
+        options.add_argument("--disable-setuid-sandbox")
         options.add_argument("--disable-gpu")
         # エラーの許容
         options.add_argument("--ignore-certificate-errors")
