@@ -28,12 +28,14 @@ USER4='......'
 
 ### Chrome
 
-AWS(lambda)で動作させる場合、[serverless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)が使える。  
-[ここ](https://hacknote.jp/archives/49974/)の通り、lambda layerにあげて使う。  
-layerでは/opt/に配置されるので下記環境変数で場所を指定する。  
+AWS(lambda)で動作させる場合、[serverless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)が使える。
+[ここ](https://hacknote.jp/archives/49974/)の通り、lambda layerにあげて使う。
+lambda layerにはChromeDriverも合わせてあげる。
+layerでは/opt/に配置されるので、それぞれ下記環境変数で場所を指定する。  
 
 ```(sh)
 CHROME_BINARY_LOCATION='/opt/headless/python/bin/headless-chromium'
+CHROME_DRIVER_LOCATION='/opt/headless/python/bin/chromedriver'
 ```
 
 #### [serverless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)のChromeバージョン

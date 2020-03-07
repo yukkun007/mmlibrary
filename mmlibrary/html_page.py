@@ -45,9 +45,7 @@ class HtmlPage:
         print(os.environ["PATH"])
         print(">>>>>>>path>>>>>>>>>>>>")
         print(">>>>>>>command>>>>>>>>>>>>")
-        cmd = "ls -alh /opt/python"
-        print(self.res_cmd(cmd))
-        cmd = "ls -alh /opt/python/bin"
+        cmd = "ls -alh /opt/headless/python/bin/"
         print(self.res_cmd(cmd))
         cmd = "whereis google-chrome"
         print(self.res_cmd(cmd))
