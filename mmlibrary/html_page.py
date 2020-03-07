@@ -25,9 +25,9 @@ class HtmlPage:
             options.binary_location = binary_location
         # 必須
         options.add_argument("--headless")
-        options.add_argument("--no-sandbox")
+        options.add_argument("--no-sandbox")  # Bypass OS security model
         options.add_argument("--disable-setuid-sandbox")
-        options.add_argument("--disable-gpu")
+        options.add_argument("--disable-gpu")  # applicable to windows os only
         # エラーの許容
         options.add_argument("--ignore-certificate-errors")
         options.add_argument("--allow-running-insecure-content")
@@ -35,6 +35,9 @@ class HtmlPage:
         # headlessでは不要そうな機能
         options.add_argument("--disable-desktop-notifications")
         options.add_argument("--disable-extensions")
+        options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+        options.add_argument("start-maximized")  # open Browser in maximized mode
+        options.add_argument("disable-infobars")  # disabling infobars
         # UA
         user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"  # noqa
         options.add_argument("--user-agent=" + user_agent)
