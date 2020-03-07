@@ -47,6 +47,10 @@ class HtmlPage:
         print(">>>>>>>command>>>>>>>>>>>>")
         cmd = "ls -alh /opt/headless/python/bin/"
         print(self.res_cmd(cmd))
+        cmd = "/opt/headless/python/bin/headless-chromium --version"
+        print(self.res_cmd(cmd))
+        cmd = "/opt/headless/python/bin/chromedriver --version"
+        print(self.res_cmd(cmd))
         cmd = "whereis google-chrome"
         print(self.res_cmd(cmd))
         cmd = "whereis google-chrome-stable"
