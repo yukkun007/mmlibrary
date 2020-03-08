@@ -1,8 +1,5 @@
 import os
-import getpass
-import pwd
 import logging
-import subprocess
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
@@ -11,17 +8,11 @@ from mmlibrary.user import User
 
 
 class HtmlPage:
-    def res_cmd(self, cmd):
-        return subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True).communicate()[0]
-
     def __init__(self) -> None:
         logging.debug("driver.create/start")
         options = ChromeOptions()
         binary_location = os.environ.get("CHROME_BINARY_LOCATION", None)
-        print(">>>>>>>chrome binary_location>>>>>>>>>>>>")
-        print(binary_location)
         if not (binary_location is None):
-            print(">>>>>>>chrome binary_location>>>>>>>>>>>>")
             options.binary_location = binary_location
         # 必須
         options.add_argument("--headless")
@@ -47,38 +38,6 @@ class HtmlPage:
 
         # chromedriver生成
         executable_path = os.environ.get("CHROME_DRIVER_LOCATION", None)
-        print(">>>>>>>path>>>>>>>>>>>>")
-        print(os.environ["PATH"])
-        print(">>>>>>>path>>>>>>>>>>>>")
-        print(">>>>>>>command>>>>>>>>>>>>")
-        cmd = "ls -alh /opt/headless/python/bin/"
-        print(self.res_cmd(cmd))
-        # cmd = "/opt/headless/python/bin/headless-chromium --version"
-        # print(self.res_cmd(cmd))
-        cmd = "/opt/headless/python/bin/chromedriver --version"
-        print(self.res_cmd(cmd))
-        cmd = "whereis google-chrome"
-        print(self.res_cmd(cmd))
-        cmd = "whereis google-chrome-stable"
-        print(self.res_cmd(cmd))
-        cmd = "whereis chromedriver"
-        print(self.res_cmd(cmd))
-        cmd = "ls -alh /usr/bin/chromedriver"
-        print(self.res_cmd(cmd))
-        cmd = "ls -alh /opt/chromedriver-75.0.3770.140"
-        print(self.res_cmd(cmd))
-        cmd = "chromedriver --version"
-        print(self.res_cmd(cmd))
-        print(">>>>>>>command>>>>>>>>>>>>")
-        print(">>>>>>>user>>>>>>>>>>>>")
-        print(getpass.getuser())
-        print(os.environ.get("USER"))
-        print(pwd.getpwuid(os.getuid())[0])
-        # print(os.getlogin())
-        print(">>>>>>>user>>>>>>>>>>>>")
-        print(">>>>>>>executable_path>>>>>>>>>>>>")
-        print(executable_path)
-        print(">>>>>>>executable_path>>>>>>>>>>>>")
         self.driver = Chrome(options=options, executable_path=executable_path)
         logging.debug("driver.create/end")
 
