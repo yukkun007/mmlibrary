@@ -16,6 +16,8 @@ USER1='{"name": "yukkun007", "disp_name": "表示する名前", "id": "1111111",
 USER2='......'
 USER3='......'
 USER4='......'
+CHROME_BINARY_LOCATION='/usr/bin/google-chrome'
+CHROME_DRIVER_LOCATION='/usr/local/bin/chromedriver'
 ```
 
 ## 依存
@@ -40,7 +42,11 @@ CHROME_DRIVER_LOCATION='/opt/headless/python/bin/chromedriver'
 
 #### [serverless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)のChromeバージョン
 
-[serverless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)の最新バージョンは69.0.3497.81なので、ChromeDriverのバージョンを合わせ2.43 or 2.44にする必要がある。  
+[ここ](https://github.com/adieuadieu/serverless-chrome/issues/133)の通り、最新のバージョン(1.0.0-55)では動かせなかった。以下の組み合わせしか動かない。
+
+- selenium==3.141.0
+- chromedriver==2.37
+- [severless-chrome](https://github.com/adieuadieu/serverless-chrome/releases)==1.0.0-37 (64.0.3282.167 stable channel)
 
 ### ChromeDriver
 
