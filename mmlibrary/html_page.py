@@ -27,8 +27,8 @@ class HtmlPage:
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-gpu")
+        options.add_argument("--single-process")
         # options.add_argument("--disable-setuid-sandbox")
-        # options.add_argument("--single-process")
         # options.add_argument("--disable-dev-shm-usage")
         # エラーの許容
         options.add_argument("--ignore-certificate-errors")
