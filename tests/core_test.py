@@ -8,7 +8,28 @@ class TestCore:
 
     @pytest.mark.slow
     @pytest.mark.parametrize(
-        "mode, zero_behavior, separate, result_type",
+        "mode, all_user, zero, separate, result_type",
+        [("prepare", True, "message", True, "message")],
+    )
+    def test_search_used_pattern(self, mode, all_user, zero, separate, result_type):
+        params = {
+            "mode": mode,
+            "all_user": all_user,
+            "users": ["yutaka"],
+            "debug": True,
+            "zero": zero,
+            "separate": separate,
+            "result_type": result_type,
+        }
+        # result = search_rental(params)
+        result = search_reserve(params)
+        for message in result:
+            print(message)
+            print("\n")
+
+    @pytest.mark.slow
+    @pytest.mark.parametrize(
+        "mode, zero, separate, result_type",
         [
             ("rental", "message", False, "info"),
             ("rental", "none", True, "message"),
@@ -16,13 +37,13 @@ class TestCore:
             ("expire", "none", False, "message"),
         ],
     )
-    def test_search_rental(self, mode, zero_behavior, separate, result_type):
+    def test_search_rental(self, mode, zero, separate, result_type):
         params = {
             "mode": mode,
             "all_user": False,
             "users": ["yutaka"],
             "debug": False,
-            "zero_behavior": zero_behavior,
+            "zero": zero,
             "separate": separate,
             "result_type": result_type,
         }
@@ -30,7 +51,7 @@ class TestCore:
 
     @pytest.mark.slow
     @pytest.mark.parametrize(
-        "mode, zero_behavior, separate, result_type",
+        "mode, zero, separate, result_type",
         [
             ("reserve", "message", False, "info"),
             ("reserve", "none", True, "message"),
@@ -38,13 +59,13 @@ class TestCore:
             ("prepare", "none", False, "message"),
         ],
     )
-    def test_search_reserve(self, mode, zero_behavior, separate, result_type):
+    def test_search_reserve(self, mode, zero, separate, result_type):
         params = {
             "mode": mode,
             "all_user": True,
             "users": ["yutaka"],
             "debug": False,
-            "zero_behavior": zero_behavior,
+            "zero": zero,
             "separate": separate,
             "result_type": result_type,
         }

@@ -5,7 +5,7 @@ from mmlibrary.reserved_books import ReservedBooks
 
 class TestReservedBooks:
     @pytest.fixture()
-    def books1(request):
+    def books1(self):
         return ReservedBooks()
 
     def test_is_prepared_reserved_book_true(self, books1):

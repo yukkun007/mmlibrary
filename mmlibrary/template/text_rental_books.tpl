@@ -2,17 +2,16 @@
 􀂏{{ user.disp_name }}({{ user.id }})
 ───────────
 􀁢貸出状況􀁢
-{% if rental_books.len > 0 -%}
-{%- if rental_books.filter_type == "rental_normal" -%}
+{%- if rental_books.len > 0 -%}
+{%- if rental_books.filter_type == "rental_normal" %}
 　　　貸出：{{ rental_books.len }}冊
-{%- elif rental_books.filter_type == "rental_expired" -%}
+{%- elif rental_books.filter_type == "rental_expired" %}
 　　　延滞：{{ rental_books.len }}冊
-{%- elif rental_books.filter_type == "rental_expire" -%}
+{%- elif rental_books.filter_type == "rental_expire" %}
 　{{ rental_books.filter_param["xdays"] }}日以内で延滞：{{ rental_books.len }}冊
 {%- endif %}
 ───────────
 {%- else %}
-􀁢貸出状況􀁢
 {%- if rental_books.filter_type == "rental_normal" %}
 　　　貸出：0冊
 {%- elif rental_books.filter_type == "rental_expired" %}
