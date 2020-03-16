@@ -16,7 +16,7 @@ mypy = "==0.770"
 pytest = "==5.4.1"
 black = "==19.10b0"
 pytest-cov = "==2.8.1"
-coverage = "==5.0.3"
+coverage = "==5.0.4"
 sphinx = "*"
 
 [requires]
