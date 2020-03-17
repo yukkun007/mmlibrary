@@ -39,6 +39,7 @@ jobs:
             - run:
                   command: |
                       openssl aes-256-cbc -k $DECRYPT_KEY -d -in .env.enc.circle -out .env
+                      cat .env
                       pipenv run py.test -v --capture=no --cov-config .coveragerc --cov=mmlibrary .
             - store_test_results: # テストサマリー (https://circleci.com/docs/ja/2.0/collect-test-data/) に表示するテスト結果をアップロードします
                   path: test-results
