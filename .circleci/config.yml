@@ -9,7 +9,7 @@ jobs:
         working_directory: ~/project
         docker: # Docker でステップを実行します
             # CircleCI Python イメージは https://hub.docker.com/r/circleci/python/ で入手できます
-            - image: circleci/python:3.6.4
+            - image: circleci/python:3.6.4-browsers
               environment: # プライマリコンテナの環境変数
                   PIPENV_VENV_IN_PROJECT: true
         steps: # `build` ジョブを構成するステップ
@@ -18,10 +18,26 @@ jobs:
                   command: "git config --global core.quotepath false"
             - checkout # ソースコードを作業ディレクトリにチェックアウトします
             - run: sudo chown -R circleci:circleci /usr/local/bin
-            - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
+            # - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
             - restore_cache:
                   # 依存関係キャッシュについては https://circleci.com/docs/ja/2.0/caching/ をお読みください
                   key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            - run:
+                  command: |
+                      echo hogehoge
+                      echo $DECRYPT_KEY
+                      whereis google-chrome-stable
+                      google-chrome-stable --version
+            - run:
+                  #   wget -N https://chromedriver.storage.googleapis.com/80.0.3987.16/chromedriver_linux64.zip -P ~/
+                  #   unzip ~/chromedriver_linux64.zip -d ~/
+                  #   rm ~/chromedriver_linux64.zip
+                  #   sudo mv -f ~/chromedriver /usr/local/share/
+                  #   sudo chmod +x /usr/local/share/chromedriver
+                  #   sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+                  command: |
+                      whereis chromedriver
+                      chromedriver --version
             - run:
                   command: |
                       sudo pip install pipenv
@@ -37,10 +53,13 @@ jobs:
                   command: |
                       pipenv run flake8 --max-line-length=100 --ignore=E203,W503 ./mmlibrary
             - run:
+                  #   pipenv run py.test -v --capture=no --cov-config .coveragerc --cov=mmlibrary .
                   command: |
-                      openssl aes-256-cbc -base64 -k $DECRYPT_KEY -d -in .env.enc.circle -out .env
-                      cat .env
-                      pipenv run py.test -v --capture=no --cov-config .coveragerc --cov=mmlibrary .
+                      echo hogehoge
+                      echo $DECRYPT_KEY
+                      openssl aes-256-cbc -base64 -k $DECRYPT_KEY -d -in .env.enc.circle -out .env.test
+                      ls -al .
+                      cat .env.test
             - store_test_results: # テストサマリー (https://circleci.com/docs/ja/2.0/collect-test-data/) に表示するテスト結果をアップロードします
                   path: test-results
             - store_artifacts: # アーティファクト (https://circleci.com/docs/ja/2.0/artifacts/) に表示するテストサマリーをアップロードします
