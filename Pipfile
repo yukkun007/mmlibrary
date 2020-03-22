@@ -31,4 +31,4 @@ ut_fast = "py.test -v --capture=no --cov-config .coveragerc --cov=mmlibrary --co
 lint = "flake8 --max-line-length=100 --ignore=E203,W503 mmlibrary"
 doc = "./doc.sh"
 envenc = "travis encrypt-file .env"
-envenc_circleci = "openssl aes-256-cbc -base64 -e -in .env -out .env.enc.circle"
+envenc_circleci = "openssl aes-256-cbc -base64 -e -in .env.circleci -out .env.enc.circle"
