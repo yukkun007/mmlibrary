@@ -1,31 +1,27 @@
-version: 2.1
-
-orbs:
-    python: circleci/python@0.2.1
+version: 2.0
 
 jobs:
-    build-and-test:
-        # ステップが実行されるディレクトリ
+    build:
         working_directory: ~/project
-        docker: # Docker でステップを実行します
-            # CircleCI Python イメージは https://hub.docker.com/r/circleci/python/ で入手できます
+        docker:
+            # CircleCI Python イメージ: https://hub.docker.com/r/circleci/python/
+            # browsersをつける
             - image: circleci/python:3.6.4-browsers
-              environment: # プライマリコンテナの環境変数
+              environment:
                   PIPENV_VENV_IN_PROJECT: true
-        steps: # `build` ジョブを構成するステップ
+        steps:
             - run:
                   # 日本語ファイルがチェックアウトできない問題に対処
                   command: "git config --global core.quotepath false"
-            - checkout # ソースコードを作業ディレクトリにチェックアウトします
-            - run: sudo chown -R circleci:circleci /usr/local/bin
+            - checkout
+            # - run: sudo chown -R circleci:circleci /usr/local/bin
             # - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
             - restore_cache:
-                  # 依存関係キャッシュについては https://circleci.com/docs/ja/2.0/caching/ をお読みください
+                  # 依存関係キャッシュについて: https://circleci.com/docs/ja/2.0/caching/
                   key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
             - run:
+                  name: chromeのバージョン確認
                   command: |
-                      echo hogehoge
-                      echo $DECRYPT_KEY
                       whereis google-chrome-stable
                       google-chrome-stable --version
             - run:
@@ -35,10 +31,12 @@ jobs:
                   #   sudo mv -f ~/chromedriver /usr/local/share/
                   #   sudo chmod +x /usr/local/share/chromedriver
                   #   sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+                  name: chromedriverのバージョン確認
                   command: |
                       whereis chromedriver
                       chromedriver --version
             - run:
+                  name: pythonモジュール導入
                   command: |
                       sudo pip install pipenv
                       pipenv install --dev
@@ -50,25 +48,18 @@ jobs:
                       - "/usr/local/bin"
                       - "/usr/local/lib/python3.6/site-packages"
             - run:
+                  name: lint
                   command: |
                       pipenv run flake8 --max-line-length=100 --ignore=E203,W503 ./mmlibrary
             - run:
-                  #   pipenv run py.test -v --capture=no --cov-config .coveragerc --cov=mmlibrary .
+                  name: unit test
                   command: |
-                      echo hogehoge
-                      echo $DECRYPT_KEY
-                      openssl aes-256-cbc -base64 -k $DECRYPT_KEY -d -in .env.enc.circle -out .env.test
-                      ls -al .
-                      cat .env.test
+                      openssl aes-256-cbc -base64 -k $DECRYPT_KEY -d -in .env.enc.circle -out .env
+                      mkdir test-reports
+                      pipenv run py.test -v --junitxml=test-reports/junit.xml --capture=no --cov-config .coveragerc --cov=mmlibrary .
+                      bash <(curl -s https://codecov.io/bash)
             - store_test_results: # テストサマリー (https://circleci.com/docs/ja/2.0/collect-test-data/) に表示するテスト結果をアップロードします
-                  path: test-results
+                  path: test-reports
             - store_artifacts: # アーティファクト (https://circleci.com/docs/ja/2.0/artifacts/) に表示するテストサマリーをアップロードします
-                  path: test-results
+                  path: test-reposrts
                   destination: tr1
-
-workflows:
-    main:
-        jobs:
-            - build-and-test
-              #   pipenv run python manage.py test
-              #   bash <(curl -s https://codecov.io/bash)

@@ -1,5 +1,6 @@
 # mmlibrary
 
+[![CircleCI](https://circleci.com/gh/yukkun007/mmlibrary/tree/master.svg?style=svg)](https://circleci.com/gh/yukkun007/mmlibrary/tree/master)
 [![Build Status](https://travis-ci.org/yukkun007/mmlibrary.svg?branch=master)](https://travis-ci.org/yukkun007/mmlibrary)
 [![codecov](https://codecov.io/gh/yukkun007/mmlibrary/branch/master/graph/badge.svg)](https://codecov.io/gh/yukkun007/mmlibrary)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3cfd46f37e08d3772808/maintainability)](https://codeclimate.com/github/yukkun007/mmlibrary/maintainability)
