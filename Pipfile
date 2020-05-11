@@ -11,7 +11,7 @@ beautifulsoup4 = "==4.9.0"
 jinja2 = "==2.11.2"
 
 [dev-packages]
-flake8 = "==3.7.9"
+flake8 = "==3.8.0"
 mypy = "==0.770"
 pytest = "==5.4.2"
 black = "==19.10b0"
