@@ -7,7 +7,7 @@ name = "pypi"
 python-dotenv = "==0.13.0"
 python-dateutil = "==2.8.1"
 selenium = "==3.141.0"
-beautifulsoup4 = "==4.9.0"
+beautifulsoup4 = "==4.9.1"
 jinja2 = "==2.11.2"
 
 [dev-packages]
