@@ -12,7 +12,7 @@ jinja2 = "==2.11.2"
 
 [dev-packages]
 flake8 = "==3.8.2"
-mypy = "==0.770"
+mypy = "==0.780"
 pytest = "==5.4.3"
 black = "==19.10b0"
 pytest-cov = "==2.9.0"
