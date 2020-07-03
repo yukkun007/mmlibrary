@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-python-dotenv = "==0.13.0"
+python-dotenv = "==0.14.0"
 python-dateutil = "==2.8.1"
 selenium = "==3.141.0"
 beautifulsoup4 = "==4.9.1"
