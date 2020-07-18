@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime, timezone
 from dateutil.parser import parse
 
 
@@ -11,7 +11,7 @@ class RentalBook:
         extend_period_button_name: str,
     ) -> None:
         self.name: str = name
-        self.expire_date: date = parse(expire_date_text).date()
+        self.expire_date: date = parse(expire_date_text).date()  # timezone無指定だが図書館サイトから取得した日本時間の日付
         self.expire_date_text: str = expire_date_text
         self.can_extend_period: bool = can_extend_period
         self.extend_period_button_name: str = extend_period_button_name
@@ -20,13 +20,13 @@ class RentalBook:
         return self.is_expire_in_xdays(-1)
 
     def is_expire_in_xdays(self, xday_before: int) -> bool:
-        today = date.today()
+        today = self.get_jst_now_date()
         if self.expire_date - today <= timedelta(days=xday_before):
             return True
         return False
 
     def get_expire_text_from_today(self) -> str:
-        today = date.today()
+        today = self.get_jst_now_date()
         remain_days = (self.expire_date - today).days
 
         if remain_days == 1:
@@ -39,6 +39,13 @@ class RentalBook:
             text = " (あと{0}日)".format(remain_days)
 
         return text
+
+    @classmethod
+    def get_jst_now_date(cls) -> date:
+        # タイムゾーンの生成
+        JST = timezone(timedelta(hours=+9), "JST")
+        # 現在時刻取得
+        return datetime.now(JST).date()
 
     def get_list_string(self) -> str:
         string = "{},{},extend={},{}".format(

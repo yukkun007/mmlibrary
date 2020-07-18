@@ -1,5 +1,5 @@
 import pytest
-from datetime import date, timedelta
+from datetime import timedelta
 from mmlibrary.rental_book import RentalBook
 
 
@@ -18,7 +18,8 @@ class TestRentalBook:
 
     @pytest.mark.parametrize("delta, result", [(-1, True), (1, False), (0, False)])
     def test_is_expired(self, delta, result):
-        d = date.today() + timedelta(days=delta)
+        today = RentalBook.get_jst_now_date()
+        d = today + timedelta(days=delta)
         book = RentalBook("test", d.strftime("%Y/%m/%d"), True, "hoge")
         assert book.is_expired() is result
 
@@ -34,7 +35,8 @@ class TestRentalBook:
         [(2, 3, True), (3, 3, True), (0, 0, True), (0, 3, True), (5, 3, False)],
     )
     def test_is_expire_in_xdays(self, delta, xdays, result):
-        d = date.today() + timedelta(days=delta)
+        today = RentalBook.get_jst_now_date()
+        d = today + timedelta(days=delta)
         book = RentalBook("test", d.strftime("%Y/%m/%d"), True, "hoge")
         assert book.is_expire_in_xdays(xdays) is result
 
@@ -42,6 +44,7 @@ class TestRentalBook:
         "delta, expected_text", [(5, " (あと5日)"), (0, " (今日ﾏﾃﾞ)"), (1, " (明日ﾏﾃﾞ)"), (-5, " (延滞)")]
     )
     def test_get_expire_text_from_today(self, delta, expected_text):
-        d = date.today() + timedelta(days=delta)
-        book = RentalBook("test", d.strftime("%Y/%m/%d"), True, "hoge")
+        today = RentalBook.get_jst_now_date()
+        d = today + timedelta(days=delta)
+        book: RentalBook = RentalBook("test", d.strftime("%Y/%m/%d"), True, "hoge")
         assert book.get_expire_text_from_today() == expected_text
